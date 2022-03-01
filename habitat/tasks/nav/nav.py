@@ -542,7 +542,7 @@ class Success(Measure):
 
         if (
             hasattr(task, "is_stop_called")
-            and task.is_stop_called  # type: ignore
+#            and task.is_stop_called  # type: ignore
             and distance_to_target < self._config.SUCCESS_DISTANCE
         ):
             self._metric = 1.0
@@ -757,7 +757,7 @@ class TopDownMap(Measure):
         if self._config.DRAW_GOAL_POSITIONS:
 
             for goal in episode.goals:
-                if self._is_on_same_floor(goal.position[1]):
+                if self._is_on_same_floor(goal.position[1]) or True:
                     try:
                         self._draw_point(
                             goal.position, maps.MAP_TARGET_POINT_INDICATOR
@@ -840,7 +840,7 @@ class TopDownMap(Measure):
     ):
         if ref_floor_height is None:
             ref_floor_height = self._sim.get_agent(0).state.position[1]
-        return ref_floor_height < height < ref_floor_height + ceiling_height
+        return ref_floor_height - 1e-4 < height < ref_floor_height + ceiling_height
 
     def reset_metric(self, episode, *args: Any, **kwargs: Any):
         self._step_count = 0
